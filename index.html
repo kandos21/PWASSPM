@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SSPM</title>
+    <meta name="description" content="SSPM  ">
+
+    <meta name="theme-color" content="#F0DB4F">
+    <meta name="MobileOptimized" content="width">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="shortcut icon" type="image/png" href="./img/logo.png">
+    <link rel="apple-touch-icon" href="./logo.png">
+    <link rel="apple-touch-startup-image" href="./logo.png">
+    <link rel="manifest" href="./manifest.json">
+
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+
+    <link rel="stylesheet" type="text/css" href="public/styles/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">-->
+    <!--<link rel="stylesheet" href="./style.css">-->
+</head>
+
+<body class="theme-light" data-highlight="blue">
+    <div id="preloader">
+        <div class="spinner-border color-highlight" role="status"></div>
+    </div>
+    <div id="page">
+
+        <!-- header and footer bar go here-->
+        <div class="header header-fixed header-auto-show header-logo-app">
+            <a href="index.html" id="Home" onclick="ROUTER.load('menu')" class="header-title">Waffles</a>
+            <a href="#" data-menu="menu-main" class="header-icon header-icon-1"><i class="fas fa-bars"></i></a>
+            <a href="#" data-toggle-theme class="header-icon header-icon-2 show-on-theme-dark"><i
+                    class="fas fa-sun"></i></a>
+            <a href="#" data-toggle-theme class="header-icon header-icon-2 show-on-theme-light"><i
+                    class="fas fa-moon"></i></a>
+            <!--  <a href="#" data-menu="menu-highlights" class="header-icon header-icon-3"><i class="fas fa-brush"></i></a>-->
+        </div>
+
+
+
+
+
+
+
+        <div class="page-content">
+
+            <div class="page-title page-title-large">
+                <h2 data-username="Usuario" class="greeting-text"></h2>
+                <a href="#" data-menu="menu-main" class="bg-fade-highlight-light shadow-xl preload-img"
+                    data-src="public/icons/icon_192.png"></a>
+            </div>
+            <div class="card header-card shape-rounded" data-card-height="150">
+                <div class="card-overlay bg-highlight opacity-95"></div>
+                <div class="card-overlay dark-mode-tint"></div>
+                <div class="card-bg preload-img" data-src="public/icons/icon_512.png"></div>
+            </div>
+
+
+            <!-- Homepage Slider-->
+
+
+            <div class="col-12">
+                <div id="mapa" style="min-height: 500; height: 600px;"></div>
+            </div>
+
+            <div class="content mt-0">
+                <div class="row">
+                    <div class="col-12">
+                        <a  id="estado" href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
+                            </a>
+                    </div>
+                    <!--<div class="col-6">
+                    <a href="#" class="btn btn-full btn-border btn-m rounded-s text-uppercase font-900 shadow-l border-highlight color-highlight">Contact US</a>
+                </div>-->
+                </div>
+            </div>
+
+
+
+            <!-- footer and footer card-->
+            <!--<div class="footer" data-menu-load="menu-footer.html"></div>-->
+        </div>
+        <!-- end of page content-->
+
+
+        <div id="menu-footer" class="menu menu-box-detached rounded-m" data-menu-load="views/layout/menu-footer.html"
+            data-menu-height="420" data-menu-effect="menu-over">
+        </div>
+
+
+
+
+
+    </div>
+  <script type="text/javascript" src="src/scripts/ol.js"></scripttype></script>
+    <script type="text/javascript" src="src/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="src/scripts/custom.js"></script>
+    <script src="./script.js"></script>
+
+    <script>
+
+const init = () => {
+    if (!"geolocation" in navigator) {
+        return alert("Tu navegador no soporta el acceso a la ubicación. Intenta con otro");
+    }
+
+    const ZOOM = 15;
+    let mapa = null, marcador = null;
+    const $estado = document.querySelector("#estado");
+    const formateador = new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium', timeStyle: 'medium' });
+    const formatearFecha = fecha => formateador.format(fecha);
+
+    const onActualizacionDeUbicacion = ubicacion => {
+        const coordenadas = ubicacion.coords;
+        let { latitude, longitude } = coordenadas;
+
+        const icono = "public/icons/favicon.png";
+        if (!mapa) {
+            // Primera vez, lo creamos y centramos
+            mapa = new ol.Map({
+                target: 'mapa', // el id del elemento en donde se monta
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([longitude, latitude]),
+                    zoom: ZOOM,
+                })
+            });
+            marcador = new ol.Feature({
+                geometry: new ol.geom.Point(
+                    ol.proj.fromLonLat([longitude, latitude])
+                ),
+            });
+            marcador.setStyle(new ol.style.Style({
+                image: new ol.style.Icon(({
+                    src: icono,
+                    scale: 0.5, // Aquí puedes ampliar o disminuir la imagen
+                })),
+            }));
+            const ultimaCapa = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [marcador],
+                }),
+            });
+            mapa.addLayer(ultimaCapa);
+        }
+        // Actualización de ubicación
+        mapa.getView().setCenter(ol.proj.fromLonLat([longitude, latitude]));
+        marcador.getGeometry().setCoordinates(ol.proj.fromLonLat([longitude, latitude]));
+        const fecha = formatearFecha(new Date(ubicacion.timestamp));
+        const registro = `Última actualización: ${fecha} en ${latitude},${longitude}`;
+        console.log(registro);
+       // $estado.textContent = registro;
+    }
+
+    const onErrorDeUbicacion = err => {
+        console.log("Error obteniendo ubicación: ", err);
+    }
+
+
+    const opcionesDeSolicitud = {
+        enableHighAccuracy: true, // Alta precisión
+        maximumAge: 0, // No queremos caché
+        timeout: 5000 // Esperar solo 5 segundos
+    };
+
+    idWatcher = navigator.geolocation.watchPosition(onActualizacionDeUbicacion, onErrorDeUbicacion, opcionesDeSolicitud);
+}
+init();
+    </script>
+    <!-- <script type="text/javascript" src="router/index.js"></script>
+  <script type="text/javascript" src="router/router.js"></script>
+  <script type="text/javascript" src="router/routes.js"></script>-->
+</body>
+
+</html>

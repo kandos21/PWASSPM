@@ -1,2 +1,1 @@
-# PWASSPM
-pwa para sspm
+# pwa de waffles belgas
