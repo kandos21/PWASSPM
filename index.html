@@ -23,7 +23,8 @@
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
     <meta http-equiv="Pragma" content="no-cache">
-
+   
+    <link rel="stylesheet" href="src/leaflet/leaflet.css">
     <link rel="stylesheet" type="text/css" href="public/styles/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="public/styles/style.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
@@ -71,8 +72,8 @@
             <!-- Homepage Slider-->
 
 
-            <div class="col-12">
-                <div id="mapa" style="min-height: 500; height: 600px;"></div>
+            <div class="col-10">
+                <div id="map" style="min-height: 500; height: 600px;"></div>
             </div>
 
             <div class="content mt-0">
@@ -104,15 +105,21 @@
 
 
     </div>
-  <script type="text/javascript" src="src/scripts/ol.js"></scripttype></script>
+    <script src="./script.js"></script>
     <script type="text/javascript" src="src/scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="src/scripts/custom.js"></script>
-    <script src="./script.js"></script>
+    <script type="text/javascript" src="src/leaflet/leaflet.js"></script>
+    <script type="text/javascript" src="src/scripts/geo.js"></script>
+   
 
     <script>
 
-const init = () => {
-    if (!"geolocation" in navigator) {
+
+
+    
+
+/*const init = () => {
+ if (!"geolocation" in navigator) {
         return alert("Tu navegador no soporta el acceso a la ubicación. Intenta con otro");
     }
 
@@ -126,7 +133,7 @@ const init = () => {
         const coordenadas = ubicacion.coords;
         let { latitude, longitude } = coordenadas;
 
-        const icono = "public/icons/favicon.png";
+        const icono = "public/icons/icon_64.png";
         if (!mapa) {
             // Primera vez, lo creamos y centramos
             mapa = new ol.Map({
@@ -181,11 +188,9 @@ const init = () => {
 
     idWatcher = navigator.geolocation.watchPosition(onActualizacionDeUbicacion, onErrorDeUbicacion, opcionesDeSolicitud);
 }
-init();
+init();*/
     </script>
-    <!-- <script type="text/javascript" src="router/index.js"></script>
-  <script type="text/javascript" src="router/router.js"></script>
-  <script type="text/javascript" src="router/routes.js"></script>-->
+    
 </body>
 
 </html>

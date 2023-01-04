@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Global Variables
     let isPWA = false;  // Enables or disables the service worker and PWA
     let isAJAX = false; // AJAX transitions. Requires local server or server
-    var pwaName = "WafflesBelgas"; //Local Storage Names for PWA
+    var pwaName = "SSPM"; //Local Storage Names for PWA
     var pwaRemind = 1; //Days to re-remind to add to home
     var pwaNoCache = false; //Requires server and HTTPS/SSL. Will clear cache with each visit
 
@@ -1557,7 +1557,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         //End of isPWA
-        if(pwaNoCache === false){
+        if(pwaNoCache === true){
             caches.delete('workbox-runtime').then(function() {});
             sessionStorage.clear()
             caches.keys().then(cacheNames => {
