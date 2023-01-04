@@ -40,7 +40,7 @@
 
         <!-- header and footer bar go here-->
         <div class="header header-fixed header-auto-show header-logo-app">
-            <a href="index.html" id="Home" onclick="ROUTER.load('menu')" class="header-title">Waffles</a>
+            <a href="index.html" id="Home" onclick="ROUTER.load('menu')" class="header-title">SSPM</a>
             <a href="#" data-menu="menu-main" class="header-icon header-icon-1"><i class="fas fa-bars"></i></a>
             <a href="#" data-toggle-theme class="header-icon header-icon-2 show-on-theme-dark"><i
                     class="fas fa-sun"></i></a>
@@ -72,15 +72,36 @@
             <!-- Homepage Slider-->
 
 
-            <div class="col-10">
-                <div id="map" style="min-height: 500; height: 600px;"></div>
+          
+
+
+            <div id="map" class="card card-style mb-0 map-full" data-card-height="cover-card">
+            
+                   
+                
+                
+              
             </div>
+
 
             <div class="content mt-0">
                 <div class="row">
                     <div class="col-12">
-                        <a  id="estado" href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
-                            </a>
+                        <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="bg-highlight color-white py-3 font-14">fecha</th>
+                                    <th scope="col" class="bg-highlight color-white py-3 font-14">lat</th>
+                                    <th scope="col" class="bg-highlight color-white py-3 font-14">lg</th>
+                                    <th scope="col" class="bg-highlight color-white py-3 font-14">hora</th>
+                                </tr>
+                            </thead>
+                            <tbody  id="tablaCoordenadas">
+                                
+                                
+                                
+                            </tbody>
+                        </table>
                     </div>
                     <!--<div class="col-6">
                     <a href="#" class="btn btn-full btn-border btn-m rounded-s text-uppercase font-900 shadow-l border-highlight color-highlight">Contact US</a>

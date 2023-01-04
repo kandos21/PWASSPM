@@ -4,43 +4,70 @@ if (navigator.geolocation) {
         maximumAge: 0, // No queremos caché
         timeout: 5000 // Esperar solo 5 segundos
     };
-  
-    navigator.geolocation.getCurrentPosition(muestraPosicion, errorPosicion,opcionesDeSolicitud);
-   
+
+    navigator.geolocation.getCurrentPosition(muestraPosicion, errorPosicion, opcionesDeSolicitud);
+
 }
-else
-{
+else {
     alert("no geo");
 }
 
-function muestraPosicion(pos){
+function muestraPosicion(pos) {
 
+
+
+
+    console.log("Te encuentras en las siguientes coordenadas: " + pos.coords.latitude + ', ' + pos.coords.longitude);
+
+    const coordenadas = pos.coords;
+    const formateador = new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium', timeStyle: 'medium' });
+    const formatearFecha = fecha => formateador.format(fecha);
+    const fecha = formatearFecha(new Date(pos.timestamp));
+    const registro = `Última actualización: ${fecha} en ${pos.coords.latitude},${pos.coords.longitude}`;
+    console.log(registro);
+
+
+    //tablaCoordenadas = $("#tablaMoordenadas");
+
+  
+
+     
 
     
 
-    console.log("Te encuentras en las siguientes coordenadas: " + pos.coords.latitude + ', ' + pos.coords.longitude  );   
-  
-  alert('Te encuentras en las siguientes coordenadas: (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')' );
- 
-  var map = L.map('map').
-  setView([pos.coords.latitude, pos.coords.longitude],
-  15);
+    var map = L.map('map').
+        setView([pos.coords.latitude, pos.coords.longitude],
+            15);
 
-  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-    maxZoom: 18
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
     }).addTo(map);
 
     L.control.scale().addTo(map);
 
-  L.marker([pos.coords.latitude,pos.coords.longitude],{draggable: true}).addTo(map);
+    L.marker([pos.coords.latitude, pos.coords.longitude], { draggable: true }).addTo(map);
 
-  const coordenadas = pos.coords;
-  const formateador = new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium', timeStyle: 'medium' });
-  const formatearFecha = fecha => formateador.format(fecha);
-  const fecha = formatearFecha(new Date(pos.timestamp));
-      const registro = `Última actualización: ${fecha} en ${pos.coords.latitude},${pos.coords.longitude}`;
-      console.log(registro);
+
+    var tablaCoordenadas=document.getElementById("#tablaCoordenadas");
+   
+
+    console.log(tablaCoordenadas);
+
+     principal =document.createElement('tr');
+     principal.textContent =   '<tr class="bg-highlight color-gray-dark">' +
+        '<th scope="row">' + fecha + '</th>' +
+        '<td>' + pos.coords.latitude + '</td>' +
+        '<td>' + pos.coords.longitude + '</td>' +
+        '<td>activo</td>' +
+        '</tr>';
+
+        Array.from(tablaCoordenadas).forEach(function (item) {
+            item.append(principal.cloneNode(true));
+        });
+    //tablaCoordenadas.append(nodo);
+
+
 }
 
 
@@ -49,7 +76,7 @@ function muestraPosicion(pos){
 
 
 function errorPosicion(err) {
-    switch(err.code) {
+    switch (err.code) {
         case err.PERMISSION_DENIED:
             alert("Debe usted permitir el acceso a su posición para que la aplicación pueda funcionar");
             break;
