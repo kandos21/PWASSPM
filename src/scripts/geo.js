@@ -25,16 +25,7 @@ function muestraPosicion(pos) {
     const fecha = formatearFecha(new Date(pos.timestamp));
     const registro = `Última actualización: ${fecha} en ${pos.coords.latitude},${pos.coords.longitude}`;
     console.log(registro);
-
-
     //tablaCoordenadas = $("#tablaMoordenadas");
-
-  
-
-     
-
-    
-
     var map = L.map('map').
         setView([pos.coords.latitude, pos.coords.longitude],
             15);
@@ -49,12 +40,14 @@ function muestraPosicion(pos) {
     L.marker([pos.coords.latitude, pos.coords.longitude], { draggable: true }).addTo(map);
 
 
-    var tablaCoordenadas=document.getElementById("#tablaCoordenadas");
+     tablaCoordenadas=document.getElementById("#tablaCoordenadas");
    
 
-    console.log(tablaCoordenadas);
+    
 
      principal =document.createElement('tr');
+
+     
      principal.textContent =   '<tr class="bg-highlight color-gray-dark">' +
         '<th scope="row">' + fecha + '</th>' +
         '<td>' + pos.coords.latitude + '</td>' +
@@ -62,10 +55,10 @@ function muestraPosicion(pos) {
         '<td>activo</td>' +
         '</tr>';
 
-        Array.from(tablaCoordenadas).forEach(function (item) {
-            item.append(principal.cloneNode(true));
-        });
-    //tablaCoordenadas.append(nodo);
+        console.log(principal);
+
+        ///Array.from(tablaCoordenadas).forEach(function (item) { item.append(principal.cloneNode(true));});
+    tablaCoordenadas.append(principal);
 
 
 }
