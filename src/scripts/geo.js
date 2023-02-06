@@ -5,7 +5,8 @@ if (navigator.geolocation) {
         timeout: 5000 // Esperar solo 5 segundos
     };
 
-    navigator.geolocation.getCurrentPosition(muestraPosicion, errorPosicion, opcionesDeSolicitud);
+    
+    navigator.geolocation.watchPosition(muestraPosicion, errorPosicion, opcionesDeSolicitud);
 
 }
 else {
@@ -26,6 +27,13 @@ function muestraPosicion(pos) {
     const registro = `Última actualización: ${fecha} en ${pos.coords.latitude},${pos.coords.longitude}`;
     console.log(registro);
     //tablaCoordenadas = $("#tablaMoordenadas");
+     //tablaCoordenadas=document.getElementById("#tablaCoordenadas");
+     document.getElementById('tablaCoordenadas').insertRow(-1).innerHTML =  '<tr class="bg-highlight color-gray-dark">' +
+     '<th scope="row">' + fecha + '</th>' +
+     '<td>' + pos.coords.latitude + '</td>' +
+     '<td>' + pos.coords.longitude + '</td>' +
+     '<td>activo</td>' +
+     '</tr>';
     var map = L.map('map').
         setView([pos.coords.latitude, pos.coords.longitude],
             15);
@@ -40,25 +48,13 @@ function muestraPosicion(pos) {
     L.marker([pos.coords.latitude, pos.coords.longitude], { draggable: true }).addTo(map);
 
 
-     tablaCoordenadas=document.getElementById("#tablaCoordenadas");
+    
+
    
 
     
 
-     principal =document.createElement('tr');
-
-     
-     principal.textContent =   '<tr class="bg-highlight color-gray-dark">' +
-        '<th scope="row">' + fecha + '</th>' +
-        '<td>' + pos.coords.latitude + '</td>' +
-        '<td>' + pos.coords.longitude + '</td>' +
-        '<td>activo</td>' +
-        '</tr>';
-
-        console.log(principal);
-
-        ///Array.from(tablaCoordenadas).forEach(function (item) { item.append(principal.cloneNode(true));});
-    tablaCoordenadas.append(principal);
+   
 
 
 }
